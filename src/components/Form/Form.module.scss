@@ -26,6 +26,7 @@
       border-radius: 5px;
       background-color: #5D677C;
       box-shadow: 0px 2px 4px #2D2B2B9F inset;
+      text-transform: capitalize;
       
       &::placeholder {
         color: #BFBFBF;
@@ -57,5 +58,12 @@
         font-size: 1.75rem;
       }
     }
+  }
+
+  .msgError {
+    font-size: 14px;
+    margin-top: 22px;
+    text-align: center;
+    width: 100%;
   }
 }

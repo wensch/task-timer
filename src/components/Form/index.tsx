@@ -15,17 +15,30 @@ const Form = ({ setTasks }: Props)  => {
     time: "00:00:00",
   });
 
+  const [msgError, setMsgError] = useState<string>('')
+
+
   function addTask(e:React.FormEvent) {
     e.preventDefault();
-    setTasks(oldTasks => [
-      ...oldTasks,
-      {
-        ...state,
-        selected: false,
-        completed: false,
-        id: uuidv4(),
+
+    setTasks(oldTasks => {
+      if (!oldTasks.find(t => state.task === t.task)) {
+        setMsgError('')
+        return [
+          ...oldTasks,
+          {
+            ...state,
+            selected: false,
+            completed: false,
+            id: uuidv4(),
+            enable: true,
+          }
+        ]
       }
-    ])
+
+      setMsgError('Tarefa já cadastrada')
+      return oldTasks
+    })
     resetState()
   }
 
@@ -47,6 +60,7 @@ const Form = ({ setTasks }: Props)  => {
         <input type="time" step="1" name="time" id="time" onChange={e => setState({...state, time: e.target.value})} value={state.time} min="00:00:00" max="01:30:00" required />
       </div>
       <Button type="submit">Adicionar </Button>
+      {msgError && <span className={style.msgError}>{msgError}</span>}
     </form> 
   )
 }

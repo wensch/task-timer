@@ -1,10 +1,11 @@
 import style from './Clock.module.scss'
 
 interface Props {
-  time: number | undefined
+  time: number | undefined,
+  BlinkWatch: boolean
 }
 
-const Clock = ({time = 0}: Props) => {
+const Clock = ({time = 0, BlinkWatch = false}: Props) => {
 
   const min = Math.floor(time / 60)
   const sec = time % 60;
@@ -15,7 +16,10 @@ const Clock = ({time = 0}: Props) => {
     <>
       <span className={style.relogioNumero}>{minD}</span>
       <span className={style.relogioNumero}>{minU}</span>
-      <span className={style.relogioDivisao}>:</span>
+      <span className={`
+        ${style.relogioDivisao}
+        ${BlinkWatch ? style.start : ''}
+        `}>:</span>
       <span className={style.relogioNumero}>{secD}</span>
       <span className={style.relogioNumero}>{secU}</span>
     </>

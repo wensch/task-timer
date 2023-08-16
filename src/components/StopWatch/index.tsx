@@ -7,13 +7,14 @@ import style from './StopWatch.module.scss'
 
 interface Props {
   selected: ITask | undefined,
-  taksDone: () => void
+  taksDone: () => void,
+  startWatch: () => void
 }
 
-
-const StopWatch = ({selected, taksDone} : Props) => {
+const StopWatch = ({selected, taksDone, startWatch} : Props) => {
   
   const [time, setTime] = useState<number>();
+  const [BlinkWatch, setBlinktWatch] = useState<boolean>(false)
 
   useEffect(() => {
     if (selected?.time) {
@@ -21,7 +22,10 @@ const StopWatch = ({selected, taksDone} : Props) => {
     }
   }, [selected])
   
-  function regressive(count:number = 0) {
+  function regressive(count:number = 0) { 
+
+    startWatch()
+    setBlinktWatch(true)
     
     setTimeout(() => {
      if (count > 0) {
@@ -29,6 +33,7 @@ const StopWatch = ({selected, taksDone} : Props) => {
         return regressive(count - 1);
       }
       taksDone()
+      setBlinktWatch(false)
     }, 1000);
   }
 
@@ -36,7 +41,7 @@ const StopWatch = ({selected, taksDone} : Props) => {
     <div className={style.cronometro}>
       <h3 className={style.titulo}> Escolha um card e inicie o cronômetro </h3>
       <div className={style.relogioWrapper}>
-        <Clock time={time} />
+        <Clock time={time} BlinkWatch={BlinkWatch} />
       </div>
       <Button onClick={() => regressive(time)}> Começar ! </Button>
     </div>

@@ -43,3 +43,10 @@
     height: 43px;
   }
 }
+
+.itemNotEnable {
+  border: 2px solid tomato;
+  cursor: none;
+  pointer-events: none;
+  opacity: 0.7;
+}

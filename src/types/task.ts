@@ -4,4 +4,5 @@ export interface ITask {
   selected: boolean,
   completed: boolean,
   id: string,
+  enable: boolean
 }

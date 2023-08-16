@@ -1,0 +1,45 @@
+{
+  "todo": [],
+  "in-progress": [],
+  "testing": [],
+  "done": [
+    {
+      "assignedTo": {
+        "name": "mawensch"
+      },
+      "category": "Bug",
+      "creation_time": "2023-08-16T17:23:56.345Z",
+      "description": {
+        "content": "Bloquear ao clicar no botão COMEÇAR\nAtivar quando a task terminar",
+        "mime": "text/markdown"
+      },
+      "id": "2",
+      "prio": 1,
+      "references": [],
+      "title": "Bloquear seleção das task",
+      "type": "bug"
+    },
+    {
+      "assignedTo": {
+        "name": "mawensch"
+      },
+      "creation_time": "2023-08-16T20:29:07.168Z",
+      "id": "3",
+      "prio": 1,
+      "references": [],
+      "title": "Impedir tarefas iguais",
+      "type": "bug"
+    },
+    {
+      "assignedTo": {
+        "name": "mawensch"
+      },
+      "category": "visual",
+      "creation_time": "2023-08-16T17:22:55.278Z",
+      "id": "1",
+      "prio": 4,
+      "references": [],
+      "title": "Animação Blink  botão começar"
+    }
+  ]
+}
