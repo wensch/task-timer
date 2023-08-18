@@ -8,13 +8,18 @@ import style from './StopWatch.module.scss'
 interface Props {
   selected: ITask | undefined,
   taksDone: () => void,
-  startWatch: () => void
+  startWatch: (validation:boolean) => void,
+  btnDisable: boolean,
+  setBtnDisable: React.Dispatch<React.SetStateAction<boolean>>,
 }
+  let timeout: NodeJS.Timeout
 
-const StopWatch = ({selected, taksDone, startWatch} : Props) => {
+const StopWatch = ({selected, taksDone, startWatch, btnDisable, setBtnDisable} : Props) => {
   
   const [time, setTime] = useState<number>();
   const [BlinkWatch, setBlinktWatch] = useState<boolean>(false)
+  const [controllerWatch, setControllerWatch] = useState<boolean>(true)
+
 
   useEffect(() => {
     if (selected?.time) {
@@ -22,19 +27,37 @@ const StopWatch = ({selected, taksDone, startWatch} : Props) => {
     }
   }, [selected])
   
-  function regressive(count:number = 0) { 
 
-    startWatch()
-    setBlinktWatch(true)
+  function regressive(count:number = 0) {
+    startWatch(false)
     
-    setTimeout(() => {
-     if (count > 0) {
+    timeout = setTimeout(() => {
+      if (count > 0) {
+        setControllerWatch(false)
         setTime(count - 1);
+        
+        setBlinktWatch(true)
         return regressive(count - 1);
       }
+      setControllerWatch(true)
       taksDone()
       setBlinktWatch(false)
     }, 1000);
+  }
+
+  function stopTime() {
+    clearTimeout(timeout)
+    setBtnDisable(false) 
+    setBlinktWatch(false)
+  }
+  
+  function resetTime() {
+    startWatch(true)
+    clearTimeout(timeout)
+    setTime(0);
+    setBtnDisable(true)
+    setControllerWatch(true)
+    setBlinktWatch(false)
   }
 
   return (
@@ -43,7 +66,11 @@ const StopWatch = ({selected, taksDone, startWatch} : Props) => {
       <div className={style.relogioWrapper}>
         <Clock time={time} BlinkWatch={BlinkWatch} />
       </div>
-      <Button onClick={() => regressive(time)}> Começar ! </Button>
+      <div className={style.holderButtons}>
+        <Button onClick={() => stopTime()} disable={controllerWatch}> PAUSAR ! </Button>
+        <Button onClick={() => regressive(time)} disable={btnDisable}> Começar ! </Button>
+        <Button onClick={() => resetTime()} disable={controllerWatch}> Parar ! </Button>
+      </div>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Form from '../components/Form'
 import List from '../components/List';
 import StopWatch from '../components/StopWatch';
@@ -7,9 +7,9 @@ import { ITask } from '../types/task';
 
 const App = () => {
 
-  // UseStates
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [selected, setTaskSelected] = useState<ITask>()
+  const [btnDisable, setBtnDisable] = useState<boolean>(true)
 
   function selectTask(taskSelected:ITask) {
     setTaskSelected(taskSelected);
@@ -17,13 +17,15 @@ const App = () => {
       ...task,
       selected: task.id === taskSelected.id,
     })));
+    
+    setBtnDisable(false)
   }
 
-  function taksDone() {
+  const taksDone = () => {
     if (selected && selected.enable) {
       setTaskSelected(undefined)
       setTasks(oldTasks => oldTasks.map(task => {
-        if (task.id === selected.id) {
+        if (selected.id === task.id) {
           return {
             ...task,
             selected: false,
@@ -39,52 +41,53 @@ const App = () => {
     }
   }
 
-  // function tested () {
-  //   selected && selected.enable ? setTasks(oldTaks => testeb(oldTaks, selected, true)) : setTasks(oldTasks => testeb(oldTasks, selected, false))
-
-  // }
-
-  // function testeb (oldTasks: ITask[], selected: ITask, bool: boolean) {
-  //   return oldTasks.map(task => {
-  //     if (task.id === selected.id) {
-  //       return {
-  //         ...task,
-  //         selected: false,
-  //         completed: bool
-  //       }
-  //     }
-      
-  //     return {
-  //       ...task,
-  //       enable: true
-  //     };
-  //   })
-  // }
-
-  function startWatch() {
-    if (selected) {
-      setTaskSelected(undefined)
+  const startWatch = (validation:boolean = false) => {
+    if (selected) {      
       setTasks(oldTasks => oldTasks.map(task => {
         if (task.id !== selected.id && !task.completed) {
           return {
             ...task,
-            selected: false,
-            enable: false
+            enable: validation
           }
         }
-        return task;
+        return {
+          ...task,
+          selected: false
+        };
       }))
-    }
+      setBtnDisable(true)
+    }    
   }
+
+  const deleteTask = (id:string) => {
+    setTasks(oldTasks => oldTasks.filter(old => old.id !== id))    
+    localStorage.setItem("Tasks", JSON.stringify([]))
+  }
+  
+  useEffect(() => {
+    if (tasks.length) {
+      localStorage.setItem("Tasks", JSON.stringify(tasks))
+    }
+    
+  }, [tasks])
+
+  useEffect(() => {
+    if (localStorage.getItem("Tasks")) {
+      setTasks(JSON.parse(localStorage.getItem("Tasks") || ''))
+    }
+  }, [])
+  
 
   return (
     <div className={style.AppStyle}>
       <Form setTasks={setTasks}/>
-      <List tasks={tasks} selectTask={selectTask}/>
+      <List tasks={tasks} selectTask={selectTask} deleteTask={deleteTask}/>
       <StopWatch 
         selected={selected} 
         taksDone={taksDone}
         startWatch={startWatch}
+        btnDisable={btnDisable}
+        setBtnDisable={setBtnDisable}
       />
     </div>
   );

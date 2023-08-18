@@ -6,12 +6,14 @@ import style from './Button.module.scss'
 interface Props {
   type?: "button" | "submit" | "reset" | undefined,
   children: React.ReactNode,
-  onClick?: () => void
+  onClick?: () => void,
+  disable?: boolean
 }
 
-const Button = ({onClick, type, children}: Props) => {
+const Button = ({onClick, type, children, disable}: Props) => {
+
   return (
-    <button type={type} onClick={onClick} className={style.botao}>
+    <button type={type} onClick={onClick} className={style.botao} disabled={disable}>
       {children} 
     </button>
   )

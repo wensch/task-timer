@@ -13,6 +13,12 @@
     background-color: #7CA6B7;
     box-shadow: 2px 2px 4px #0000009F inset;
   }
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
 }
 
 @media screen and (min-width: 1280px) {

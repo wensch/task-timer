@@ -56,4 +56,10 @@
       font-size: 2.25rem;
     }
   }
+
+  .holderButtons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
 }

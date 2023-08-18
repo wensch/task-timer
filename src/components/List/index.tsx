@@ -4,10 +4,11 @@ import style from './List.module.scss'
 
 interface Props {
   tasks: ITask[],
-  selectTask: (task: ITask) => void
+  selectTask: (task: ITask) => void,
+  deleteTask: (id: string) => void,
 }
 
-const List = ({tasks, selectTask}: Props) => {
+const List = ({tasks, selectTask, deleteTask}: Props) => {
   return (
     <aside className={style.listaTarefas}>
       <h2> Estudos do dia </h2>
@@ -17,7 +18,8 @@ const List = ({tasks, selectTask}: Props) => {
             <Item 
               key={item.id} 
               {...item}
-              selectTask={selectTask} 
+              selectTask={selectTask}
+              deleteTask={deleteTask} 
             />
           ))
         }
