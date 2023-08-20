@@ -12,7 +12,7 @@ const Form = ({ setTasks }: Props)  => {
 
   const [state, setState] = useState({
     task: '',
-    time: "00:00:00",
+    time: "00:00:10",
     color: "#4D4D4D"
   });
 
@@ -25,7 +25,6 @@ const Form = ({ setTasks }: Props)  => {
     setTasks(oldTasks => {
       if (!oldTasks.find(t => state.task === t.task)) {
         setMsgError('')
-        // localStorage.setItem("Tasks", JSON.stringify(state))
         return [
           ...oldTasks,
           {
@@ -60,7 +59,7 @@ const Form = ({ setTasks }: Props)  => {
       </div>
       <div className={style.inputContainer}>
         <label htmlFor="time">Tempo</label>
-        <input type="time" step="1" name="time" id="time" onChange={e => setState({...state, time: e.target.value})} value={state.time} min="00:00:10" max="01:30:00" required />
+        <input type="time" step="1" name="time" id="time" onChange={e => setState({...state, time: e.target.value})} value={state.time} min="00:00:00" max="01:30:00" required />
       </div>
       <div className={style.inputContainer}>
         <label htmlFor="cor">Cor</label>

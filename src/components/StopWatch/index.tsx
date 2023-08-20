@@ -67,9 +67,9 @@ const StopWatch = ({selected, taksDone, startWatch, btnDisable, setBtnDisable} :
         <Clock time={time} BlinkWatch={BlinkWatch} />
       </div>
       <div className={style.holderButtons}>
-        <Button onClick={() => stopTime()} disable={controllerWatch}> PAUSAR ! </Button>
-        <Button onClick={() => regressive(time)} disable={btnDisable}> Começar ! </Button>
-        <Button onClick={() => resetTime()} disable={controllerWatch}> Parar ! </Button>
+        <Button onClick={() => stopTime()} disable={controllerWatch}> <span className={style.btnPause}></span> </Button>
+        <Button onClick={() => regressive(time)} disable={btnDisable}> <span className={style.btnStart}></span> </Button>
+        <Button onClick={() => resetTime()} disable={controllerWatch}> <span className={style.btnStop}></span> </Button>
       </div>
     </div>
   )
